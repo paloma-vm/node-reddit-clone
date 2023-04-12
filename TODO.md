@@ -1,0 +1,12 @@
+- Create a post
+- Show all posts
+- Comment on posts
+- Make comments on comments
+- Create a post on a subreddit
+- Show all subreddits
+- Create subreddit
+- Search
+- Sign up
+- Login
+- Associate posts, comments, and votes with their author
+- Vote a post up or down
