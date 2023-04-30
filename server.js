@@ -1,18 +1,20 @@
 // Require Libraries
 const express = require('express');
 const exphbs = require('express-handlebars');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 // App Setup
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 
 // Middleware
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'})); // had to add .engine after exphbs
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+// got it working again by moving the 2 lines below from above // Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Set db
 const db = require('./data/reddit-db');
@@ -25,9 +27,9 @@ require('./controllers/posts')(app); // had to move this here
 
 
 /* code below from Braus' video */
-app.get('/', function (req, res) {
-  res.render('home');
-});
+// app.get('/', function (req, res) {
+//   res.render('home');
+// });
 
 app.get('/posts/new', (req, res) => {
   res.render('posts-new')
@@ -41,28 +43,28 @@ app.get('/cases/new', (req, res) => {
 })
 
 // CREATE
-const Post = require('./models/post'); // had to change from '../models/post'
+// const Post = require('./models/post'); // had to change from '../models/post'
 
-module.exports = (app) => {
-  // CREATE
-  app.post('/posts/new', (req, res) => {
-    // INSTANTIATE INSTANCE OF POST MODEL
-    const post = new Post(req.body);
+// module.exports = (app) => {
+//   // CREATE
+//   app.post('/posts/new', (req, res) => {
+//     // INSTANTIATE INSTANCE OF POST MODEL
+//     const post = new Post(req.body);
 
-    // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
-    post.save(() => res.redirect('/'));
-  });
+//     // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
+//     post.save(() => res.redirect('/'));
+//   });
   
-};
+// };
 
 // INDEX
-app.get('/', (req, res) => {
-  Post.find({}).lean()
-    .then((posts) => res.render('posts-index', { posts }))
-    .catch((err) => {
-      console.log(err.message);
-    })
-})
+// app.get('/', (req, res) => {
+//   Post.find({}).lean()
+//     .then((posts) => res.render('posts-index', { posts }))
+//     .catch((err) => {
+//       console.log(err.message);
+//     })
+// })
 
 // SHOW
 app.get('/cases/:id', (req, res) => {
@@ -70,6 +72,16 @@ app.get('/cases/:id', (req, res) => {
 
   res.render('cases-show', { case: caseData })
 });
+
+// LOOK UP THE POST -- async/await  SHOW POST
+// app.get('/posts/:id', async (req, res) => {
+//   try {
+//     const post = await Post.findById(req.params.id).lean();
+//     return res.render('posts-show', { post });
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// });
 
 // EDIT
 app.get('/cases/:id/edit', (req, res) => {

@@ -8,6 +8,14 @@ const Post = require('../models/post');
 // };
 
 module.exports = (app) => {
+  app.get('/', async (req, res) => {
+    try {
+      const posts = await Post.find({}).lean();
+      return res.render('posts-index', { posts });
+    } catch (err) {
+      console.log(err.message);
+    }
+  });
   // CREATE
   app.post('/posts/new', (req, res) => {
     console.log(req.body);
@@ -17,6 +25,10 @@ module.exports = (app) => {
     // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
     post.save(() => res.redirect('/'));
   });
+
+  app.get('/posts/new', (req, res) => {
+    res.render('posts-new')
+  })
 
   // READ -- not async/await
   // app.get('/', (req, res) => {
@@ -28,14 +40,7 @@ module.exports = (app) => {
   // })
 
   // READ -- async/await
-  app.get('/', async (req, res) => {
-    try {
-      const posts = await Post.find({}).lean();
-      return res.render('posts-index', { posts });
-    } catch (err) {
-      console.log(err.message);
-    }
-  });
+
 
   // LOOK UP THE POST -- not async/await
   // app.get('/posts/:id', (req, res) => {
@@ -45,7 +50,7 @@ module.exports = (app) => {
   //       console.log(err.message);
   //     });
   // });
-  
+
   // LOOK UP THE POST -- async/await
   app.get('/posts/:id', async (req, res) => {
     try {
