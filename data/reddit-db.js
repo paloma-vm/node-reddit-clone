@@ -6,9 +6,9 @@ const url = 'mongodb://localhost/reddit-db';
 mongoose.connect(
   url,
   {
-    useNewUrlParser: true
+    useNewUrlParser: true, useUnifiedTopology: true,
   },
-  function(err, db) {
+  (err) => {
     assert.equal(null, err);
     console.log('Connected successfully to database');
 
