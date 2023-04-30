@@ -37,4 +37,22 @@ module.exports = (app) => {
     }
   });
 
+  // LOOK UP THE POST -- not async/await
+  // app.get('/posts/:id', (req, res) => {
+  //   Post.findById(req.params.id).lean()
+  //     .then((post) => res.render('posts-show', { post }))
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // });
+  // LOOK UP THE POST -- async/await
+  app.get('/posts/:id', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id).lean();
+      return res.render('posts-show', { post });
+    } catch (err) {
+      console.log(err.message);
+    }
+  });
+
 };
