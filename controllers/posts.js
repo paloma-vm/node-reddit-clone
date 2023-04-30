@@ -61,4 +61,22 @@ module.exports = (app) => {
     }
   });
 
+  // SUBREDDIT
+  // orig version 
+  // app.get('/n/:subreddit', (req, res) => {
+  //   console.log(req.params.subreddit);
+  // });
+
+  // async version
+  app.get('/n/:subreddit', async (req, res) => {
+    try {
+      const posts = await Post.find({ subreddit: req.params.subreddit }).lean();
+      return res.render('posts-index', { posts });
+    } catch (err) {
+      console.log(err.message);
+    }
+    console.log(req.params.subreddit);
+  });
+  
+
 };
