@@ -45,6 +45,7 @@ module.exports = (app) => {
   //       console.log(err.message);
   //     });
   // });
+  
   // LOOK UP THE POST -- async/await
   app.get('/posts/:id', async (req, res) => {
     try {

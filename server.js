@@ -56,6 +56,13 @@ module.exports = (app) => {
 };
 
 // INDEX
+app.get('/', (req, res) => {
+  Post.find({}).lean()
+    .then((posts) => res.render('posts-index', { posts }))
+    .catch((err) => {
+      console.log(err.message);
+    })
+})
 
 // SHOW
 app.get('/cases/:id', (req, res) => {
@@ -87,3 +94,5 @@ app.delete('/cases/:id', (req, res) => {
 app.listen(3000, () => {
   console.log('Reddit Clone listening on port localhost:3000!');
 });
+
+module.exports = app;
