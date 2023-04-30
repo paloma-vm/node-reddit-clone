@@ -8,6 +8,7 @@ const Post = require('../models/post');
 // };
 
 module.exports = (app) => {
+  // INDEX
   app.get('/', async (req, res) => {
     try {
       const posts = await Post.find({}).lean();

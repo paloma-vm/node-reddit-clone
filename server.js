@@ -19,6 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 // Set db
 const db = require('./data/reddit-db');
 require('./controllers/posts')(app); // had to move this here
+require('./controllers/comments.js')(app);
+
 
 // Routes
 // app.get('/', (req, res) => {
