@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 // App Setup
 const app = express();
 
-require('./controllers/posts')(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -17,6 +16,7 @@ app.set('views', './views');
 
 // Set db
 const db = require('./data/reddit-db');
+require('./controllers/posts')(app); // had to move this here
 
 // Routes
 // app.get('/', (req, res) => {
