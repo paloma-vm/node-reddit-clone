@@ -52,15 +52,34 @@ module.exports = (app) => {
   //     });
   // });
 
-  // LOOK UP THE POST -- async/await
+  // SHOW -- async/await
+  // app.get('/posts/:id', async (req, res) => {
+  //   try {
+  //     const post = await Post.findById(req.params.id).lean();
+  //     return res.render('posts-show', { post });
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // });
+
+  /* SHOW (LOOK UP POST) async  */
   app.get('/posts/:id', async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id).lean();
-      return res.render('posts-show', { post });
-    } catch (err) {
+      const post = await Post.findById(req.params.id).lean().populate('comments');
+      res.render('posts-show', { post });
+    } catch(err) {
       console.log(err.message);
     }
   });
+     
+
+  /* LOOK UP POST */
+  // Post
+  //   .findById(req.params.id).lean().populate('comments')
+  //   .then((post) => res.render('post-show', { post }))
+  //   .catch((err) => {
+  //     console.log(err.message);
+  // }); 
 
   // SUBREDDIT
   // orig version 
