@@ -18,7 +18,7 @@ module.exports = (app) => {
 
       res.redirect('/');
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   });
   

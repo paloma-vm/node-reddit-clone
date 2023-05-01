@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 const db = require('./data/reddit-db');
 require('./controllers/posts')(app); // had to move this here
 require('./controllers/comments.js')(app);
+require('./controllers/auth.js')(app);
 
 
 // Routes
