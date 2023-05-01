@@ -24,6 +24,6 @@ mongoose.connect(
 // );
 // mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection Error:'));
 mongoose.set('debug', true);
-// mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', false);
 
 module.exports = mongoose.connection;

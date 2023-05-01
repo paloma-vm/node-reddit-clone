@@ -1,7 +1,9 @@
 // Require Libraries
+require('dotenv').config();
 const express = require('express');
 const exphbs = require('express-handlebars');
 // const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 // App Setup
 const app = express();
@@ -15,6 +17,7 @@ app.set('views', './views');
 // got it working again by moving the 2 lines below from above // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser()); // Add this after you initialize express.
 
 // Set db
 const db = require('./data/reddit-db');
@@ -46,28 +49,7 @@ app.get('/cases/new', (req, res) => {
 })
 
 // CREATE
-// const Post = require('./models/post'); // had to change from '../models/post'
 
-// module.exports = (app) => {
-//   // CREATE
-//   app.post('/posts/new', (req, res) => {
-//     // INSTANTIATE INSTANCE OF POST MODEL
-//     const post = new Post(req.body);
-
-//     // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
-//     post.save(() => res.redirect('/'));
-//   });
-  
-// };
-
-// INDEX
-// app.get('/', (req, res) => {
-//   Post.find({}).lean()
-//     .then((posts) => res.render('posts-index', { posts }))
-//     .catch((err) => {
-//       console.log(err.message);
-//     })
-// })
 
 // SHOW
 app.get('/cases/:id', (req, res) => {
@@ -76,15 +58,6 @@ app.get('/cases/:id', (req, res) => {
   res.render('cases-show', { case: caseData })
 });
 
-// LOOK UP THE POST -- async/await  SHOW POST
-// app.get('/posts/:id', async (req, res) => {
-//   try {
-//     const post = await Post.findById(req.params.id).lean();
-//     return res.render('posts-show', { post });
-//   } catch (err) {
-//     console.log(err.message);
-//   }
-// });
 
 // EDIT
 app.get('/cases/:id/edit', (req, res) => {
