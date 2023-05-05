@@ -12,12 +12,12 @@ module.exports = (app) => {
     const user = new User(req.body);
 
     user
-      .save()
-      .then(() => {
-        const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: '60 days' });
-        res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
-        return res.redirect('/');
-      });
+    .save()
+    .then(() => {
+      const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: '60 days' });
+      res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
+      return res.redirect('/');
+    });
   });
 
   // SIGN UP POST (async)
@@ -32,4 +32,10 @@ module.exports = (app) => {
   //       console.log(err.message);
   //     }
   // });
+
+    // LOGOUT
+    app.get('/logout', (req, res) => {
+      res.clearCookie('nToken');
+      return res.redirect('/');
+    });
 };
