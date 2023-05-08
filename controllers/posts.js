@@ -1,4 +1,6 @@
 const Post = require('../models/post');
+const User = require('../models/user');
+const Comment = require('../models/comment');
 
 module.exports = (app) => {
   // INDEX
@@ -12,16 +14,26 @@ module.exports = (app) => {
     }
   });
 
-  // CREATE
+  // CREATE (async)
   app.post('/posts/new', async (req, res) => {
     console.log(req.body);
     if (req.user) {
       // INSTANTIATE INSTANCE OF POST MODEL
+      const userId = req.user._id;
       const post = new Post(req.body);
+      post.author = userId;
 
-      // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
-      await post.save();
-      return res.redirect('/');
+      try {
+        // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
+        await post.save();
+        const user = await User.findById(userId);
+        user.posts.unshift(post);
+        await user.save();
+        // REDIRECT TO THE NEW POST
+        return res.redirect(`/posts/${post._id}`);
+    } catch (err) {
+      console.log(err.message);
+    }
     } else {
       return res.status(401); // UNAUTHORIZED
     }
