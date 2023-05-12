@@ -11,7 +11,7 @@ module.exports = (app) => {
       const userId = req.user._id;
       const comment = await new Comment(req.body);
       comment.author = userId
-
+      
       try {
         // SAVE INSTANCE OF Comment MODEL TO DB
         await comment.save();
