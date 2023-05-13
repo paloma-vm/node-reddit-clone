@@ -22,6 +22,8 @@ module.exports = (app) => {
       const userId = req.user._id;
       const post = new Post(req.body);
       post.author = userId;
+      post.downVotes = [];
+      post.voteScore = 0;
 
       try {
         // SAVE INSTANCE OF POST MODEL TO DB AND REDIRECT TO THE ROOT
@@ -65,5 +67,30 @@ module.exports = (app) => {
       console.log(err.message);
     }
     console.log(req.params.subreddit);
+  });
+
+  // UPDATE  -- PUT  (VOTING) 
+  app.put('/posts/:id/vote-up', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id)
+      post.upVotes.push(req.user._id);
+      post.voteScore += 1;
+      await post.save();
+      return res.status(200);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  
+  app.put('/posts/:id/vote-down', async (req, res) => {
+    try {
+     const post = await Post.findById(req.params.id);
+      post.downVotes.push(req.user._id);
+      post.voteScore -= 1;
+      await post.save();
+      return res.status(200);
+    } catch (err) {
+      console.log(err);
+    }
   });
 };

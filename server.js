@@ -20,6 +20,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser()); // Add this after you initialize express.
 app.use(checkAuth);
+app.use(express.static('public'));
+
 
 // Set db
 const db = require('./data/reddit-db');
