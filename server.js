@@ -26,6 +26,7 @@ const db = require('./data/reddit-db');
 require('./controllers/posts')(app); // had to move this here
 require('./controllers/comments.js')(app);
 require('./controllers/auth.js')(app);
+require('./controllers/replies.js')(app);
 
 
 // Routes
