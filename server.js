@@ -42,9 +42,9 @@ require('./controllers/replies.js')(app);
 //   res.render('home');
 // });
 
-app.get('/posts/new', (req, res) => {
-  res.render('posts-new')
-})
+// app.get('/posts/new', (req, res) => {
+//   res.render('posts-new')
+// })
 
 // CASES RESOURCE
 
